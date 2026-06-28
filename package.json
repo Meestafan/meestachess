@@ -1,0 +1,25 @@
+{
+  "name": "meestachess",
+  "version": "0.1.0",
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "echo Root workspace",
+    "build": "echo Build workspace"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meestafan/meestachess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Meestafan/meestachess/issues"
+  },
+  "homepage": "https://github.com/Meestafan/meestachess#readme"
+}
