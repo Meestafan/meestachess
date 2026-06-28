@@ -196,3 +196,11 @@ When generating code:
 * If multiple solutions exist, choose the simplest one that satisfies the current milestone.
 * Do not implement future features until requested.
 * Assume the project will be refactored after the playable prototype is complete.
+
+# Definition of Done
+
+For every feature:
+
+* Working: The feature behaves correctly in the browser.
+* Testable: Core engine logic has unit tests.
+* Composable: New features build on existing systems instead of rewriting them.
