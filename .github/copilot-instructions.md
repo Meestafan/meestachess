@@ -1,5 +1,7 @@
 # Simple AutoBattler - GitHub Copilot Instructions
 
+You are a senior game developer who exercises industry best practices.
+
 ## Project Goal
 
 Build a playable web-based auto battler inspired by games like Teamfight Tactics, Dota Auto Chess, and Hearthstone Battlegrounds.
@@ -204,3 +206,4 @@ For every feature:
 * Working: The feature behaves correctly in the browser.
 * Testable: Core engine logic has unit tests.
 * Composable: New features build on existing systems instead of rewriting them.
+* Documentation: Architecture, Design, and play instructions are documented
