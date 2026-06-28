@@ -5,4 +5,7 @@ export interface UnitStats {
     armor: number;
     movementSpeed: number;
     attackRange: number;
+    maxMana?: number;
+    manaPerAttack?: number;
+    abilityPower?: number;
 }

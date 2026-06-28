@@ -28,6 +28,7 @@ export class App {
   protected readonly team = Team;
 
   protected readonly selectedTeam = signal<Team>(Team.Blue);
+  protected readonly selectedBenchUnitId = signal<string | undefined>(undefined);
   protected readonly status = signal('Place units for both teams, then start battle.');
   protected readonly battleStarted = signal(false);
   protected readonly winner = signal<string | undefined>(undefined);
@@ -53,6 +54,31 @@ export class App {
     return this.game().units.filter((u) => u.team === Team.Red).length;
   });
 
+  protected readonly shopOffers = computed(() => {
+    this.refresh();
+    return this.game().getShop(this.selectedTeam()).offers;
+  });
+
+  protected readonly benchUnits = computed(() => {
+    this.refresh();
+    return this.game().getBench(this.selectedTeam());
+  });
+
+  protected readonly benchCount = computed(() => {
+    this.refresh();
+    return this.benchUnits().length;
+  });
+
+  protected readonly gold = computed(() => {
+    this.refresh();
+    return this.game().getGold(this.selectedTeam());
+  });
+
+  protected readonly round = computed(() => {
+    this.refresh();
+    return this.game().round;
+  });
+
   protected selectTeam(team: Team) {
     if (this.battleStarted()) {
       return;
@@ -66,6 +92,18 @@ export class App {
     }
 
     if (tile.occupant) {
+      return;
+    }
+
+    const selectedBenchId = this.selectedBenchUnitId();
+    if (selectedBenchId) {
+      if (this.game().placeBenchUnit(selectedBenchId, tile.x, tile.y, this.selectedTeam())) {
+        this.selectedBenchUnitId.set(undefined);
+        this.refresh.update((current) => current + 1);
+        this.status.set('Placed a unit from the bench.');
+      } else {
+        this.status.set('Unable to place the selected bench unit.');
+      }
       return;
     }
 
@@ -84,6 +122,27 @@ export class App {
     } else {
       this.status.set('That tile is unavailable.');
     }
+  }
+
+  protected buyOffer(index: number) {
+    if (this.battleStarted()) {
+      return;
+    }
+
+    if (this.game().buyOffer(index, this.selectedTeam())) {
+      this.refresh.update((current) => current + 1);
+      this.status.set('Bought a unit into your bench.');
+    } else {
+      this.status.set('Cannot buy that unit right now.');
+    }
+  }
+
+  protected selectBenchUnit(unitId: string) {
+    if (this.battleStarted()) {
+      return;
+    }
+
+    this.selectedBenchUnitId.set(unitId);
   }
 
   protected startBattle() {

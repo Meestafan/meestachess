@@ -205,5 +205,4 @@ For every feature:
 
 * Working: The feature behaves correctly in the browser.
 * Testable: Core engine logic has unit tests.
-* Composable: New features build on existing systems instead of rewriting them.
 * Documentation: Architecture, Design, and play instructions are documented

@@ -2,7 +2,7 @@
   <section class="game-header">
     <div>
       <h1>{{ title() }}</h1>
-      <p class="subtitle">Build your teams, place units on the 8�8 board, then start the battle.</p>
+      <p class="subtitle">Build your teams, place units on the 8x8 board, then start the battle.</p>
     </div>
 
     <div class="status-panel">
@@ -12,6 +12,9 @@
         <span>Tick: {{ tickCount() }}</span>
         <span>Blue: {{ blueCount() }}</span>
         <span>Red: {{ redCount() }}</span>
+        <span>Round: {{ round() }}</span>
+        <span>Gold: {{ gold() }}</span>
+        <span>Bench: {{ benchCount() }}/9</span>
       </div>
       <div class="winner" *ngIf="winner()">
         Winner: {{ winner() }}
@@ -33,6 +36,37 @@
       <button type="button" (click)="startBattle()" [disabled]="battleStarted()">Start Battle</button>
       <button type="button" (click)="resetGame()">Reset</button>
     </div>
+  </section>
+
+  <section class="shop-shell">
+    <h2>Shop</h2>
+    <div class="shop-offers">
+      <div class="shop-card" *ngFor="let offer of shopOffers(); let i = index">
+        <div class="shop-card-title">{{ offer.name }} (Tier {{ offer.tier }})</div>
+        <div class="shop-card-meta">Traits: {{ offer.traits.join(', ') }}</div>
+        <div class="shop-card-meta">Cost: {{ offer.cost }}</div>
+        <button type="button" (click)="buyOffer(i)" [disabled]="offer.cost > gold() || benchCount() >= 9 || battleStarted()">
+          Buy
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bench-shell">
+    <h2>Bench</h2>
+    <div class="bench-grid">
+      <button
+        type="button"
+        class="bench-item"
+        *ngFor="let unit of benchUnits()"
+        [class.selected]="selectedBenchUnitId() === unit.id"
+        (click)="selectBenchUnit(unit.id)"
+      >
+        <span>{{ unit.name }}</span>
+        <span>{{ unit.traits.join(', ') }}</span>
+      </button>
+    </div>
+    <p class="panel-note">Select a bench unit, then click an empty board tile to place it.</p>
   </section>
 
   <section class="board-shell">
